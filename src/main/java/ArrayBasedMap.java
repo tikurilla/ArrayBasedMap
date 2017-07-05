@@ -2,25 +2,32 @@ import java.util.*;
 
 public class ArrayBasedMap<K, V> implements Map<K, V> {
 
-    private List<Pair> values = new ArrayList<Pair>();
+    private List<Entry<K, V>> values = new ArrayList<>();
 
     @Override
     public int size() {
         // BEGIN (write your solution here)
-        return -1;
+        return values.size();
         // END
     }
 
     @Override
     public boolean isEmpty() {
         // BEGIN (write your solution here)
-        return false;
+        return values.size() == 0;
         // END
     }
 
     @Override
     public boolean containsKey(Object key) {
         // BEGIN (write your solution here)
+        if (key == null)
+            throw new NullPointerException();
+        for (Map.Entry<K, V> currentKey: values) {
+            if (currentKey.getKey().equals((K)key)) {
+                return true;
+            }
+        }
         return false;
         // END
     }
@@ -28,6 +35,13 @@ public class ArrayBasedMap<K, V> implements Map<K, V> {
     @Override
     public boolean containsValue(Object value) {
         // BEGIN (write your solution here)
+        if (value == null)
+            throw new NullPointerException();
+        for (Map.Entry<K, V> currentValue: values) {
+            if (currentValue.getKey().equals((V)value)) {
+                return true;
+            }
+        }
         return false;
         // END
     }
@@ -42,7 +56,18 @@ public class ArrayBasedMap<K, V> implements Map<K, V> {
     @Override
     public V put(K key, V value) {
         // BEGIN (write your solution here)
-        return null;
+        Map.Entry<K, V> newPair = new Pair(key, value);
+        int currentIndex = 0;
+        for (Map.Entry<K, V> currentPair: values) {
+            if (currentPair.getKey().equals(newPair.getKey())) {
+                V oldValue = currentPair.getValue();
+                values.set(currentIndex, newPair);
+                return oldValue;
+            }
+            currentIndex++;
+        }
+        values.add(newPair);
+        return newPair.getValue();
         // END
     }
 
@@ -69,7 +94,7 @@ public class ArrayBasedMap<K, V> implements Map<K, V> {
     @Override
     public Set<K> keySet() {
         final Set<K> keys = new HashSet<K>();
-        for (Pair p : values) keys.add(p.getKey());
+        for (Entry<K, V> p : values) keys.add(p.getKey());
         return keys;
     }
 
