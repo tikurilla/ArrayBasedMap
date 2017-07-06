@@ -38,7 +38,7 @@ public class ArrayBasedMap<K, V> implements Map<K, V> {
         if (value == null)
             throw new NullPointerException();
         for (Map.Entry<K, V> currentValue: values) {
-            if (currentValue.getKey().equals((V)value)) {
+            if (currentValue.getValue().equals((V)value)) {
                 return true;
             }
         }
@@ -49,6 +49,11 @@ public class ArrayBasedMap<K, V> implements Map<K, V> {
     @Override
     public V get(Object key) {
         // BEGIN (write your solution here)
+        for (Map.Entry<K, V> currentPair: values) {
+            if (currentPair.getKey().equals((K)key)) {
+                return currentPair.getValue();
+            }
+        }
         return null;
         // END
     }
@@ -67,7 +72,7 @@ public class ArrayBasedMap<K, V> implements Map<K, V> {
             currentIndex++;
         }
         values.add(newPair);
-        return newPair.getValue();
+        return null;
         // END
     }
 
@@ -101,7 +106,11 @@ public class ArrayBasedMap<K, V> implements Map<K, V> {
     @Override
     public Collection<V> values() {
         // BEGIN (write your solution here)
-        return null;
+        List<V> valuesList = new ArrayList<>();
+        for (Map.Entry<K, V> currentPair: values) {
+            valuesList.add(currentPair.getValue());
+        }
+        return (Collection<V>)valuesList;
         // END
     }
 
