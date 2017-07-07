@@ -6,21 +6,16 @@ public class ArrayBasedMap<K, V> implements Map<K, V> {
 
     @Override
     public int size() {
-        // BEGIN (write your solution here)
         return values.size();
-        // END
     }
 
     @Override
     public boolean isEmpty() {
-        // BEGIN (write your solution here)
         return values.size() == 0;
-        // END
     }
 
     @Override
     public boolean containsKey(Object key) {
-        // BEGIN (write your solution here)
         if (key == null)
             throw new NullPointerException();
         for (Map.Entry<K, V> currentKey: values) {
@@ -29,12 +24,10 @@ public class ArrayBasedMap<K, V> implements Map<K, V> {
             }
         }
         return false;
-        // END
     }
 
     @Override
     public boolean containsValue(Object value) {
-        // BEGIN (write your solution here)
         if (value == null)
             throw new NullPointerException();
         for (Map.Entry<K, V> currentValue: values) {
@@ -43,24 +36,20 @@ public class ArrayBasedMap<K, V> implements Map<K, V> {
             }
         }
         return false;
-        // END
     }
 
     @Override
     public V get(Object key) {
-        // BEGIN (write your solution here)
         for (Map.Entry<K, V> currentPair: values) {
             if (currentPair.getKey().equals((K)key)) {
                 return currentPair.getValue();
             }
         }
         return null;
-        // END
     }
 
     @Override
     public V put(K key, V value) {
-        // BEGIN (write your solution here)
         Map.Entry<K, V> newPair = new Pair(key, value);
         int currentIndex = 0;
         for (Map.Entry<K, V> currentPair: values) {
@@ -73,14 +62,20 @@ public class ArrayBasedMap<K, V> implements Map<K, V> {
         }
         values.add(newPair);
         return null;
-        // END
     }
 
     @Override
     public V remove(Object key) {
-        // BEGIN (write your solution here)
+        int currentIndex = 0;
+        for (Map.Entry<K, V> currentPair: values) {
+            if (currentPair.getKey().equals((K)key)) {
+                V removedValue = currentPair.getValue();
+                values.remove(currentIndex);
+                return removedValue;
+            }
+            currentIndex++;
+        }
         return null;
-        // END
     }
 
     @Override
@@ -91,9 +86,7 @@ public class ArrayBasedMap<K, V> implements Map<K, V> {
 
     @Override
     public void clear() {
-        // BEGIN (write your solution here)
-
-        // END
+        values.clear();
     }
 
     @Override
@@ -105,18 +98,18 @@ public class ArrayBasedMap<K, V> implements Map<K, V> {
 
     @Override
     public Collection<V> values() {
-        // BEGIN (write your solution here)
         List<V> valuesList = new ArrayList<>();
         for (Map.Entry<K, V> currentPair: values) {
             valuesList.add(currentPair.getValue());
         }
         return (Collection<V>)valuesList;
-        // END
     }
 
     @Override
     public Set<Entry<K, V>> entrySet() {
+
         return (Set<Entry<K, V>>)(Set)new HashSet<>(values);
+
     }
 
     private class Pair implements Map.Entry<K, V> {
